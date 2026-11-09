@@ -36,13 +36,13 @@ private static async Task Main(string[] args)
 	Console.WriteLine($"Асинхронное время: {watch.Elapsed.TotalSeconds:F2} секунд");
 
 	watch.Start();
-	Task<string> t1 = ProcessDataAsync("File1", 3000);
-	Task<string> t2 = ProcessDataAsync("File2", 1000);	
-	Task<string> t3 = ProcessDataAsync("File3", 2000);
+	Task<string> a1 = ProcessDataAsync("File1", 3000);
+	Task<string> a2 = ProcessDataAsync("File2", 1000);	
+	Task<string> a3 = ProcessDataAsync("File3", 2000);
 	List<Task<string>> taskList = new List<Task<string>>();
-	taskList.Add(t1);
-	taskList.Add(t2);
-	taskList.Add(t3);
+	taskList.Add(a1);
+	taskList.Add(a2);
+	taskList.Add(a3);
 	try
 	{
 	while (taskList.Count > 0)
