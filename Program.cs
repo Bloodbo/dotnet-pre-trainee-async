@@ -34,4 +34,28 @@ private static async Task Main(string[] args)
 	Console.WriteLine(await t3);
 	watch.Stop();
 	Console.WriteLine($"Асинхронное время: {watch.Elapsed.TotalSeconds:F2} секунд");
+
+	watch.Start();
+	Task<string> t1 = ProcessDataAsync("File1", 3000);
+	Task<string> t2 = ProcessDataAsync("File2", 1000);	
+	Task<string> t3 = ProcessDataAsync("File3", 2000);
+	List<Task<string>> taskList = new List<Task<string>>();
+	taskList.Add(t1);
+	taskList.Add(t2);
+	taskList.Add(t3);
+	try
+	{
+	while (taskList.Count > 0)
+	{
+		Task<string> taskCompleted = await Task.WhenAny(taskList);
+		Console.WriteLine(await taskCompleted);
+		taskList.Remove(taskCompleted);
+	}
+	}
+	catch(Exception ex)
+	{
+	Console.WriteLine($"ПРОИЗОШЛА ОШИБКА: {ex.Message}");
+	}
+	watch.Stop();
+	Console.WriteLine($"Асинхронное время (WhenAny): {watch.Elapsed.TotalSeconds:F2} секунд");
 }
